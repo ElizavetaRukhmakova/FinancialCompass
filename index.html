@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Финансовый компас</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Nunito:wght@500;700;900&family=Rubik:wght@800&display=swap">
+<style>
+:root{--bg:#eef3ff;--card:#fff;--ink:#1c2340;--mut:#5d6585;--acc:#3d5afe;--acc2:#e8ecff;--ok:#12a36b;--okb:#e0f7ee;--warn:#c77700;--warnb:#fff3d9;--bad:#d6334a;--badb:#ffe4e8;--line:#d5dcf2;--coin:#ffc233;
+box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
+@media(prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#131830;--card:#1d2445;--ink:#eef1ff;--mut:#a3abd1;--acc:#8ea0ff;--acc2:#29325e;--ok:#4fd8a0;--okb:#173d38;--warn:#ffc864;--warnb:#3d3322;--bad:#ff8a9b;--badb:#47212d;--line:#323b6b}}
+:root[data-theme="dark"]{--bg:#131830;--card:#1d2445;--ink:#eef1ff;--mut:#a3abd1;--acc:#8ea0ff;--acc2:#29325e;--ok:#4fd8a0;--okb:#173d38;--warn:#ffc864;--warnb:#3d3322;--bad:#ff8a9b;--badb:#47212d;--line:#323b6b}
+html{scroll-padding-top:env(safe-area-inset-top,0px)}
+body{margin:0;background:var(--bg);color:var(--ink);font:500 17px/1.5 Nunito,system-ui,Arial,sans-serif}
+main{max-width:560px;margin:0 auto;padding:16px}
+h1{font-size:34px;line-height:1.1;margin:6px 0 10px;font-weight:900}
+h2{font-size:23px;margin:4px 0 6px;font-weight:900}
+p{margin:8px 0}
+.c{background:var(--card);border:2px solid var(--line);border-radius:22px;padding:20px;margin-top:12px}
+.big{font-size:60px;line-height:1.1;text-align:center}
+.hud{display:flex;justify-content:space-between;gap:8px;font-weight:700;font-size:15px;color:var(--mut)}
+.goal{background:var(--card);border:2px solid var(--line);border-radius:18px;padding:12px 14px;margin-top:8px}
+.bar{height:16px;border-radius:9px;background:var(--acc2);overflow:hidden;margin-top:8px}
+.bar i{display:block;height:100%;background:var(--coin);border-radius:9px;transition:width .5s}
+.o,.b,.g{display:block;width:100%;font:inherit;font-weight:700;text-align:left;border-radius:16px;padding:14px 16px;margin-top:10px;cursor:pointer;color:var(--ink);background:var(--card);border:2px solid var(--line)}
+.o:hover,.g:hover{border-color:var(--acc);background:var(--acc2)}
+.b{background:var(--acc);border-color:var(--acc);color:#fff;text-align:center;font-weight:900}
+:root:not([data-theme="light"]) .b{color:#10152e}
+button:focus-visible{outline:3px solid var(--acc);outline-offset:2px}
+.g{display:flex;align-items:center;gap:14px}
+.g .e{font-size:38px}.g small{display:block;color:var(--mut);font-weight:500;font-size:14px}
+.inc{background:var(--okb);color:var(--ok);border-radius:12px;padding:8px 12px;font-weight:700;font-size:15px}
+.fb{border-radius:14px;padding:12px 14px;font-weight:700;margin-top:8px}
+.f0{background:var(--okb);color:var(--ok)}.f1{background:var(--warnb);color:var(--warn)}.f2,.f3{background:var(--badb);color:var(--bad)}
+.d{color:var(--mut);font-size:15px;text-align:center}
+ul{padding-left:20px;margin:8px 0}li{margin:4px 0}
+.o{display:flex;justify-content:space-between;align-items:center;gap:12px}
+.m{font-style:normal;font-weight:900;white-space:nowrap;border-radius:10px;padding:2px 9px}.m0{background:var(--okb);color:var(--ok)}.m1{background:var(--badb);color:var(--bad)}
+.amt{font-size:56px;font-weight:900;text-align:center;border-radius:20px;padding:10px;line-height:1.1}.a0{background:var(--okb);color:var(--ok)}.a1{background:var(--badb);color:var(--bad)}
+
+:root{--sky:#7fd0ff}
+@media(prefers-color-scheme:dark){:root:not([data-theme="light"]){--sky:#1b2150}}
+:root[data-theme="dark"]{--sky:#1b2150}
+body{background:var(--sky)}
+h1,h2{font-family:Rubik,Nunito,sans-serif;font-weight:800}
+.c,.goal,.hud{border:3px solid var(--ink);box-shadow:0 6px 0 var(--ink)}
+.hud{background:var(--card);border-radius:16px;padding:8px 12px;color:var(--ink);margin-bottom:10px}
+.goal{margin:12px 0 6px}
+.o,.b,.g{border:3px solid var(--ink);box-shadow:0 4px 0 var(--ink);transition:transform .08s,box-shadow .08s}
+.o:active,.b:active,.g:active{transform:translateY(4px);box-shadow:0 0 0 var(--ink)}
+.b{background:var(--coin);color:#1c2340;font-size:19px}
+:root:not([data-theme="light"]) .b{color:#1c2340}
+.bar{height:20px;border:3px solid var(--ink);background:var(--card)}
+.bar i{background:linear-gradient(90deg,#ffc233,#ff9f1c)}
+.art{display:block;width:100%;border:3px solid var(--ink);border-radius:16px;margin:4px 0 8px}
+.react{display:flex;align-items:center;gap:8px}.react>div{flex:1}
+.react .amt{font-size:42px;padding:8px 4px}
+.stage{background:var(--coin);border:3px solid var(--ink);border-radius:18px;display:flex;justify-content:center;padding-top:8px;overflow:hidden;margin-bottom:8px}
+@keyframes pop{0%{transform:scale(.8)}60%{transform:scale(1.08)}100%{transform:scale(1)}}
+.react svg,.stage svg{animation:pop .35s}
+@media(prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
+.prize{font-size:72px;align-self:center;animation:pop .5s}
+</style>
+</head>
+<body>
+<main id="app"></main>
+<script>
+var G=[["🎲","Настольная игра",700,2,"лёгкая"],["🎧","Наушники",1500,3,"средняя"],["👟","Кроссовки",2200,5,"сложная"],["🎮","Геймпад",3000,6,"эксперт"]];
+var L=[0,100,300,400],R=[0,10,25,40],P=["✅","🤔","⚠️","🚨"];
+var ST=[
+{e:"💰",t:"Первая неделя",q:"Тебе дали 500 ₽ карманных. Как поступишь?",o:[["Сразу отложу на цель сколько нужно",0,"Верно: сначала откладываем на цель, потом тратим остальное."],["Потрачу, а что останется — отложу",1,"Остаток обычно мал. Копить надо сразу, а не «что останется»."],["Потрачу на всякое, пока есть деньги",2,"Без плана деньги исчезают незаметно."]]},
+{e:"🏷️",t:"Скидка −50%",q:"В магазине толстовка со скидкой 50%. Друзья уже купили.",o:[["Пройду мимо: она мне не нужна",0,"Скидка не делает ненужную вещь нужной."],["Куплю, это же выгодно!",2,"Выгода есть, только если вещь нужна. Иначе это просто трата."]]},
+{e:"📱",t:"Подписка",q:"Приложение даёт бесплатную неделю, потом спишет 299 ₽ в месяц.",o:[["Прочитаю условия и отключу автопродление",0,"Условия подписки читают заранее, чтобы не платить за ненужное."],["Подключу, не читая",2,"Деньги списались автоматически. Всегда читай условия."]]},
+{e:"💬",t:"Друг просит денег",q:"Друг пишет в чате: «Срочно переведи 500 ₽, завтра верну!»",o:[["Переведу: другу надо помочь",3,"Страницу друга могли взломать. Мошенники часто просят срочно перевести деньги.",450],["Позвоню другу и проверю, он ли это",0,"Верно: просьбу о деньгах проверяй через другой канал связи."]]},
+{e:"🤝",t:"Долг",q:"Одноклассник просит 300 ₽ в долг до пятницы.",o:[["Вежливо откажу: коплю на цель",0,"Отказать можно: у тебя есть цель и свой бюджет."],["Дам 100 ₽ и договорюсь о сроке",1,"Небольшая сумма и срок снижают риск, но деньги ушли с цели."],["Дам 300 ₽ без уточнений",2,"Без срока долг легко забыть, а деньги уже потеряны."]]},
+{e:"🍕",t:"Кафе",q:"Друзья зовут в кафе после школы.",o:[["Скажу, что коплю, и предложу погулять",0,"Общаться вовсе не обязательно за деньги."],["Пойду и возьму только чай",1,"Немного, но лишние траты складываются."],["Закажу как все",2,"Желание быть «как все» часто стоит дорого.",250]]}];
+var EV=[
+{e:"📞",t:"Звонок «из банка»",q:"Звонят «из банка» и просят код из SMS, чтобы «защитить» счёт.",o:[["Назову код: вдруг это правда банк",3,"Настоящий банк никогда не просит коды из SMS. Мошенники получили доступ к деньгам.",500],["Положу трубку и позвоню в банк сам(а)",0,"Верно: перезвони по номеру с карты или с сайта банка."]]},
+{e:"🎁",t:"Вы выиграли!",q:"Пришло сообщение: «Вы выиграли приз! Оплатите доставку 150 ₽ по ссылке».",o:[["Оплачу: приз же!",3,"Это ложный приз: мошенники забирают деньги и данные карты.",350],["Проигнорирую: я нигде не участвовал(а)",0,"Верно: «призы» с оплатой доставки — обман."]]},
+{e:"🎰",t:"Лёгкие деньги",q:"В интернете реклама: «Вложи 300 ₽ — получи 1000 ₽ за день!»",o:[["Вложу, вдруг получится",3,"Обещание быстрой прибыли — признак обмана. Деньги пропали.",400],["Закрою рекламу: лёгких денег не бывает",0,"Верно: чем выше обещанный доход, тем выше риск обмана."]]},
+{e:"🎮",t:"Покупка в игре",q:"В любимой игре продают скин за 200 ₽.",o:[["Куплю: он классный",2,"Скин не приближает к цели, а 200 ₽ потеряны.",200],["Не буду: коплю на цель",0,"Верно: цель важнее сиюминутного «хочу»."]]},
+{e:"🥪",t:"Школьный буфет",q:"В буфете вкусные булочки. Как будешь питаться на этой неделе?",o:[["Возьму еду из дома",0,"Домашняя еда экономит деньги."],["Куплю пару раз за неделю",1,"Немного, но это деньги не на цель."],["Буду брать каждый день",2,"Мелкие траты каждый день незаметно съедают бюджет.",250]]},
+{e:"📱",t:"Чехол",q:"Чехол на телефоне поцарапался, но работает. В магазине новый за 300 ₽.",o:[["Оставлю старый: он работает",0,"Верно: не заменяй то, что ещё служит."],["Куплю новый",2,"Старый ещё годился, а 300 ₽ потеряны."]]}];
+var g,w,sum,rat,dg,q,i,err;
+var BOY=Math.random()<.5;
+function hero(m,w){var k="#1c2340",S='stroke="'+k+'" stroke-width="3" stroke-linejoin="round" stroke-linecap="round"',hr=BOY?"#5a3b2a":"#9a5b2e";
+var mo={h:'<path d="M49 72q11 13 22 0z" fill="#fff" '+S+'/>',n:'<path d="M52 77h16" fill="none" '+S+'/>',s:'<path d="M50 81q10-10 20 0" fill="none" '+S+'/>'}[m];
+var br={h:'<path d="M42 47q6-5 12 0M66 47q6-5 12 0" fill="none" '+S+'/>',n:'',s:'<path d="M42 52l12-5M78 52l-12-5" fill="none" '+S+'/>'}[m];
+var bd=BOY?'<path d="M22 150v-26q0-22 38-26t38 26v26z" fill="#2c3f7a" '+S+'/><path d="M46 100l14 24 14-24z" fill="#fff" '+S+'/><path d="M57 110h6l2 18-5 5-5-5z" fill="#d6334a" '+S+'/>':'<path d="M22 150v-26q0-22 38-26t38 26v26z" fill="#fff" '+S+'/><path d="M32 150v-30l12-15h32l12 15v30z" fill="#2c3f7a" '+S+'/>';
+var ha=BOY?'<path d="M29 56q-4-34 31-34t31 34q-8-15-31-15t-31 15z" fill="'+hr+'" '+S+'/>':'<path d="M29 56q-4-34 31-34t31 34q-8-15-31-15t-31 15zM29 56q-10 32 3 48l9-8-3-36zM91 56q10 32-3 48l-9-8 3-36z" fill="'+hr+'" '+S+'/><circle cx="31" cy="34" r="8" fill="#fff" '+S+'/><circle cx="89" cy="34" r="8" fill="#fff" '+S+'/>';
+return'<svg viewBox="0 0 120 150" width="'+w+'" role="img" aria-label="Герой игры">'+bd+'<circle cx="60" cy="58" r="30" fill="#ffd5b5" '+S+'/>'+ha+'<circle cx="41" cy="68" r="5" fill="#ff9aa8" opacity=".6"/><circle cx="79" cy="68" r="5" fill="#ff9aa8" opacity=".6"/><circle cx="48" cy="60" r="3.5" fill="'+k+'"/><circle cx="72" cy="60" r="3.5" fill="'+k+'"/>'+br+mo+(m=="s"?'<path d="M45 70q-4 7 0 9q4-2 0-9z" fill="#6cc4ff"/>':'')+(m=="h"?'<text x="92" y="30" font-size="20">✨</text>':'')+'</svg>'}
+var SA=[["#ffd54a",[["💵",95,105,66],["JAR",205,108,80]],"+500 ₽"],["#ff7a95",[["👕",100,108,80],["🏷️",208,100,64]],"\u221250%"],["#9b8cff",[["📱",100,108,84],["💳",208,104,64]],"299 ₽ / мес"],["#4fd1b0",[["💬",100,106,74],["📲",208,108,70]],"Срочно 500 ₽!"],["#ffa94d",[["🤝",105,108,80],["🪙",210,104,60]],"Долг 300 ₽"],["#ff8f70",[["🍕",98,108,74],["🥤",208,108,68]]]];
+var EA=[["#6a7bff",[["📞",98,108,74],["🏦",208,106,68]],"Код из SMS?"],["#ff6fc0",[["🎁",100,108,78],["🎉",208,104,62]],"Вы выиграли!"],["#3fbf84",[["🎰",100,108,78],["📈",208,106,66]],"+1000 ₽ за день"],["#8e6bff",[["🎮",100,108,78],["⚔️",208,106,64]],"Скин 200 ₽"],["#ffc455",[["🥪",98,108,72],["🥐",208,108,70]]],["#52b8ff",[["📱",100,108,82],["🛍️",208,106,64]],"Чехол 300 ₽"]];
+ST.forEach(function(s,j){s.a=SA[j]});EV.forEach(function(s,j){s.a=EA[j]});
+function jar(x,y){var S='stroke="#1c2340" stroke-width="3" stroke-linejoin="round"';return'<g transform="translate('+(x-32)+','+(y-80)+')"><rect x="8" y="0" width="48" height="13" rx="4" fill="#d6334a" '+S+'/><path d="M11 13h42v8q11 6 11 20v24q0 9-9 9H9q-9 0-9-9V41q0-14 11-20z" fill="#e6f7ff" '+S+'/><circle cx="21" cy="62" r="10" fill="#ffc233" '+S+'/><circle cx="43" cy="62" r="10" fill="#ffc233" '+S+'/><circle cx="32" cy="45" r="10" fill="#ffc233" '+S+'/><text x="32" y="51" font-size="14" font-weight="900" text-anchor="middle" fill="#1c2340">₽</text></g>'}
+function art(a){var n=a[2];return'<svg viewBox="0 0 300 150" class="art" role="img"><rect width="300" height="150" fill="'+a[0]+'"/><circle cx="30" cy="30" r="46" fill="#fff" opacity=".22"/><circle cx="280" cy="130" r="60" fill="#fff" opacity=".22"/>'+a[1].map(function(e){return e[0]=="JAR"?jar(e[1],e[2]):'<text x="'+e[1]+'" y="'+e[2]+'" font-size="'+e[3]+'" text-anchor="middle">'+e[0]+'</text>'}).join("")+(n?'<rect x="'+(150-n.length*6-14)+'" y="8" width="'+(n.length*12+28)+'" height="34" rx="12" fill="#fff" stroke="#1c2340" stroke-width="3"/><text x="150" y="32" text-anchor="middle" font-size="19" font-weight="900" fill="#1c2340" font-family="Nunito,sans-serif">'+n+'</text>':'')+'</svg>'}
+var $=document.getElementById("app");
+function h(s){$.innerHTML=s;window.scrollTo(0,0)}
+function sh(a){return a.map(function(x){return[Math.random(),x]}).sort(function(a,b){return a[0]-b[0]}).map(function(x){return x[1]})}
+function intro(){h('<div class="c"><div class="stage">'+hero("h",170)+'</div><h1>🧭 Финансовый компас</h1><p>Привет! Это игра о деньгах. Ты будешь копить на вещь своей мечты и принимать решения.</p><ul><li>Каждую неделю тебе приходит 500 ₽ карманных. Всего 6 недель.</li><li>Каждую неделю тебя ждут 2 ситуации. Выбирай вариант, который считаешь лучшим.</li><li>Разумные решения сохраняют деньги, ошибки отнимают их и снижают рациональность.</li><li>Вещь покупается сама, как только накопишь нужную сумму.</li><li>Берегись мошенников: два опасных выбора, и игра закончится.</li></ul><button class="b" onclick="pick()">Выбрать цель</button></div>')}
+function pick(){h('<div class="c"><div class="react">'+hero("h",96)+'<div><h2>На что будешь копить?</h2></div></div><p>Выбери цель и уровень сложности: чем дороже вещь, тем сложнее игра.</p>'+G.map(function(x,k){return'<button class="g" onclick="go('+k+')"><span class="e">'+x[0]+'</span><span><b>'+x[1]+' — '+x[2]+' ₽</b><small>Сложность: '+x[4]+'</small></span></button>'}).join("")+'</div>')}
+function go(k){g=G[k];w=1;sum=500;rat=100;err=0;dg=0;i=0;var e=sh(EV);q=[];ST.forEach(function(s,j){q.push(s,e[j])});scene()}
+function hud(){return'<div class="hud"><span>📅 Неделя '+w+' из 6</span><span>📊 Рациональность '+rat+'%</span></div><div class="goal">'+g[0]+' '+g[1]+': <b>'+sum+' / '+g[2]+' ₽</b><div class="bar"><i style="width:'+Math.min(100,sum/g[2]*100)+'%"></i></div></div>'}
+function scene(){var s=q[i];h(hud()+'<div class="c">'+(i%2?'':'<div class="inc">💵 Новая неделя: +500 ₽ карманных</div>')+art(s.a)+'<h2>'+s.t+'</h2><p>'+s.q+'</p>'+s.o.map(function(o,k){return'<button class="o" onclick="ch('+k+')">'+o[0]+'</button>'}).join("")+'</div>')}
+function ch(k){var o=q[i].o[k],t=o[1],l=o[3]===undefined?L[t]:o[3],b=rat;sum=Math.max(0,sum-l);if(l){rat=Math.max(0,rat-l/10);err=1}else rat=Math.min(100,rat+10);var dl=rat-b;if(t==3)dg++;h(hud()+'<div class="c"><div class="react">'+hero(t==0?"h":t==1?"n":"s",104)+'<div><div class="amt a'+(l?1:0)+'">'+(l?'\u2212'+l+' \u20bd':'0 \u20bd')+'</div><p class="d">'+(dl?(dl>0?'+':'\u2212')+Math.abs(dl)+'% \u00b7 ':'')+'рациональность сейчас '+rat+'%</p></div></div><div class="fb f'+t+'">'+P[t]+' '+o[2]+'</div><button class="b" onclick="nx()">Дальше</button></div>')}
+function nx(){if(dg>=2)return end("scam");i++;if(i%2==0){if(i>=12)return end("fin");w++;sum+=500;if(sum>=g[2])return end("buy")}scene()}
+function end(t){var p=Math.round(sum/g[2]*100),e,ti,tx;
+if(t=="scam"){e="🚨";ti="Тебя обманули мошенники";tx="Ты дважды выбрал(а) опасный вариант и потерял(а) деньги. Накоплено "+sum+" из "+g[2]+" ₽."}
+else if(t=="buy"){if(!err){e="🏆";ti="Идеально!";tx="Ты купил(а) «"+g[1]+"» за "+w+" нед. — быстрее невозможно. Рациональность 100%: чем меньше лишних трат, тем быстрее цель."}else{e="✅";ti="Цель достигнута!";tx="Ты купил(а) «"+g[1]+"» за "+w+" нед. "+(w>g[3]?"Идеально было бы за "+g[3]+". ":"Срок идеальный, но были лишние траты. ")+"Были ошибки в решениях: лишние траты отодвигают цель."}}
+else if(p>=50){e="⏳";ti="Почти получилось";tx="Накоплено "+sum+" из "+g[2]+" ₽ ("+p+"%). Не хватило "+(g[2]-sum)+" ₽: лишние траты съели время. Попробуй ещё раз!"}
+else{e="💸";ti="Остался(ась) без денег";tx="Накоплено только "+sum+" из "+g[2]+" ₽ ("+p+"%). Траты без плана съели бюджет. Попробуй ещё раз!"}
+h('<div class="c"><div class="stage">'+hero(t=="buy"?"h":t=="fin"&&p>=50?"n":"s",150)+(t=="buy"?'<span class="prize">'+g[0]+'</span>':'')+'</div><h1>'+e+' '+ti+'</h1><p>'+tx+'</p><h2>Главные правила</h2><ul><li>Откладывай сразу, а не «что останется».</li><li>Скидка не делает ненужную вещь нужной.</li><li>Читай условия подписок.</li><li>Никому не называй коды и проверяй просьбы о деньгах.</li></ul><p>Чем рациональнее решения, тем быстрее цель. Попробуй другую цель или пройди эту идеально.</p><button class="b" onclick="pick()">🔄 Играть заново</button></div>')}
+intro();
+</script>
+</body>
+</html>
